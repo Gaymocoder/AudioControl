@@ -6,10 +6,13 @@ set(CMAKE_SHARED_LIBRARY_PREFIX "")
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 
+set(AudioDataCalls_LIB GCS.AudioDataCalls.cpp)
 set(Extras_LIB GCS.Extras.cpp)
 set(MAIN_EXE main.cpp)
 
+add_library(GCS.AudioDataCalls SHARED ${AudioDataCalls_LIB})
 add_library(GCS.Extras SHARED ${Extras_LIB})
 add_executable(GCSAudioControl ${MAIN_EXE})
 
-target_link_libraries(GCSAudioControl GCS.Extras)
+target_link_libraries(GCS.AudioDataCalls GCS.Extras)
+target_link_libraries(GCSAudioControl GCS.AudioDataCalls GCS.Extras)

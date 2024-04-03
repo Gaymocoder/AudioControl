@@ -1,3 +1,4 @@
+#include "GCS.AudioDataCalls.h"
 #include "GCS.Extras.h"
 
 #include <cstdint>
@@ -12,65 +13,8 @@
 void ChangeDeviceVolume(const std::string &deviceName, const double &newVolumeLevel)
 {
     CoInitialize(NULL);
-    HRESULT hr;
-    uint32_t deviceCount = 0;
-    IMMDevice* requestedDevice = NULL;
-    IMMDeviceEnumerator* deviceEnumerator = NULL;
-    IMMDeviceCollection* deviceCollection = NULL;
 
-    hr = CoCreateInstance(__uuidof(MMDeviceEnumerator), NULL, CLSCTX_ALL,
-        __uuidof(IMMDeviceEnumerator), (LPVOID*) &deviceEnumerator);
-    hr = deviceEnumerator->EnumAudioEndpoints(eAll, DEVICE_STATE_ACTIVE,
-        &deviceCollection);
-    deviceCollection->GetCount(&deviceCount);
-
-    for(uint32_t i = 0; i < deviceCount; ++i)
-    {
-        IMMDevice* device = NULL;
-        fprintf(stdout, "Getting device #%i — ", i+1);
-        if (FAILED(deviceCollection->Item(i, &device)))
-        {
-            fprintf(stderr, "Failed to get device #%i\n", i+1);
-            continue;
-        }
-    
-        IPropertyStore *propertyStore;
-        PROPVARIANT propVariant;
-        if (FAILED(device->OpenPropertyStore(STGM_READ, &propertyStore)))
-        {
-            PropVariantClear(&propVariant);
-            propertyStore->Release();
-
-            fprintf(stderr, "Failed to open property store for requested device\n");
-            continue;
-        }
-
-        if (FAILED(propertyStore->GetValue(PKEY_Device_FriendlyName, &propVariant)))
-        {
-            PropVariantClear(&propVariant);
-            propertyStore->Release();
-
-            fprintf(stderr, "Failed to get friendly name for requested device");
-            continue;
-        }
-        std::string deviceFriendlyName = wstrToStr(propVariant.pwszVal);
-
-        PropVariantClear(&propVariant);
-        propertyStore->Release();
-
-        fprintf(stderr, "— %s — ", deviceFriendlyName.c_str());
-
-        if (deviceFriendlyName == deviceName)
-        {
-            if (deviceEnumerator) deviceEnumerator->Release();
-            if (deviceCollection) deviceCollection->Release();
-            requestedDevice = device;
-
-            break;
-        }
-
-        fprintf(stderr, "wrong device\n");
-    }
+    IMMDevice* requestedDevice = getDevice(deviceName);
 
     if (requestedDevice == NULL)
     {
