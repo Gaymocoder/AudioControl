@@ -12,7 +12,7 @@
 void setNormalLocale()
 {
     if (WIN == 1)
-        std::system("chcp 65001");
+        std::system("chcp 65001 > nul");
 }
 
 std::wstring strToWstr(const std::string &srcString)
