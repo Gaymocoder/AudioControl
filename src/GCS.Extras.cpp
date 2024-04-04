@@ -26,3 +26,10 @@ std::string wstrToStr(const std::wstring &srcWstring)
     std::wstring_convert<std::codecvt_utf8_utf16<wchar_t>> converter;
     return converter.to_bytes(srcWstring);
 }
+
+void PressEnter()
+{
+    char tmp = 'x';
+    printf("Press Enter to exit ");
+    std::cin.get(tmp);
+}

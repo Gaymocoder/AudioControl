@@ -6,6 +6,6 @@
 #include <mmdeviceapi.h>
 
 std::string getDeviceFriendlyName(IMMDevice* device);
-IMMDevice* getDevice(const std::string& deviceFriendlyName);
+IMMDevice* getDevice(const std::string &deviceFriendlyName, bool isSubstr);
 
 #endif

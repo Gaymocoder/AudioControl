@@ -6,5 +6,6 @@
 void setNormalLocale();
 std::wstring strToWstr(const std::string &srcString);
 std::string wstrToStr(const std::wstring &srcWstring);
+void PressEnter();
 
 #endif

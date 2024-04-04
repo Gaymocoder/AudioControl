@@ -1,11 +1,10 @@
 #include "GCS.AudioDataCalls.h"
 #include "GCS.Extras.h"
 
+#include <fstream>
 #include <endpointvolume.h>
 #include <initguid.h>
 #include <FunctionDiscoveryKeys_devpkey.h>
-
-#include <fstream>
 
 std::string getDeviceFriendlyName(IMMDevice* device)
 {
@@ -35,7 +34,7 @@ std::string getDeviceFriendlyName(IMMDevice* device)
     return deviceFriendlyName;
 }
 
-IMMDevice* getDevice(const std::string &deviceFriendlyName)
+IMMDevice* getDevice(const std::string &deviceFriendlyName, bool isSubstr)
 {
     fprintf(stderr, "Seeking for device \"%s\"...\n", deviceFriendlyName.c_str());
     uint32_t deviceCount;
@@ -61,7 +60,8 @@ IMMDevice* getDevice(const std::string &deviceFriendlyName)
         std::string currDeviceFriendlyName = getDeviceFriendlyName(device);
         fprintf(stderr, "— %s — ", currDeviceFriendlyName.c_str());
 
-        if (currDeviceFriendlyName == deviceFriendlyName)
+        if (isSubstr && currDeviceFriendlyName.find(deviceFriendlyName) != std::string::npos
+            || !isSubstr && currDeviceFriendlyName == deviceFriendlyName)
         {
             if (deviceEnumerator) deviceEnumerator->Release();
             if (deviceCollection) deviceCollection->Release();
