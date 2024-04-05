@@ -1,5 +1,5 @@
-#include "GCS.AudioActions.h"
-#include "GCS.Extras.h"
+#include "GCSAudioControl/AudioActions.h"
+#include "GCSAudioControl/Extras.h"
 
 int main(int argc, char** argv)
 {

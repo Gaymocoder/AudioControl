@@ -1,5 +1,5 @@
-#include "GCS.AudioDataCalls.h"
-#include "GCS.Extras.h"
+#include "GCSAudioControl/AudioDataCalls.h"
+#include "GCSAudioControl/Extras.h"
 
 #include <fstream>
 #include <endpointvolume.h>
@@ -34,11 +34,11 @@ std::string getDeviceFriendlyName(IMMDevice* device)
     return deviceFriendlyName;
 }
 
-IMMDevice* getDevice(const std::string &deviceFriendlyName, bool isSubstr)
+void getDevice(const std::string &deviceFriendlyName, bool isSubstr, IMMDevice* &device)
 {
     fprintf(stderr, "Seeking for device \"%s\"...\n", deviceFriendlyName.c_str());
     uint32_t deviceCount;
-    IMMDevice* device = NULL;
+    device = NULL;
     IMMDeviceEnumerator* deviceEnumerator = NULL;
     IMMDeviceCollection* deviceCollection = NULL;
 
@@ -56,7 +56,6 @@ IMMDevice* getDevice(const std::string &deviceFriendlyName, bool isSubstr)
             fprintf(stderr, "Failed to get device #%i\n", i+1);
             continue;
         }
-
         std::string currDeviceFriendlyName = getDeviceFriendlyName(device);
         fprintf(stderr, "— %s — ", currDeviceFriendlyName.c_str());
 
@@ -66,7 +65,7 @@ IMMDevice* getDevice(const std::string &deviceFriendlyName, bool isSubstr)
             if (deviceEnumerator) deviceEnumerator->Release();
             if (deviceCollection) deviceCollection->Release();
 
-            return device;
+            return;
         }
 
         fprintf(stderr, "wrong device\n");
@@ -75,7 +74,9 @@ IMMDevice* getDevice(const std::string &deviceFriendlyName, bool isSubstr)
     if (device) device->Release();
     if (deviceEnumerator) deviceEnumerator->Release();
     if (deviceCollection) deviceCollection->Release();
+    
+    device = NULL;
 
     fprintf(stderr, "Requested device has not been found.\n");
-    return NULL;
+    return;
 }

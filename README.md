@@ -22,10 +22,10 @@ Executable file will be placed in "GCSAudioControl/bin" directory
 2. Write to file in 2 lines volume level and audio device name, for example:
 ```
 20
-Динамики
+Speakers
 ```
 3. Rename file to "preset.gcsap"
 4. Open file with "GCSAudioControl.exe"
-5. Preset has been applied (volume of device "Динамики" was set to 20%)
+5. Preset has been applied (volume of device "Speakers" was set to 20%)
 
 Examples for preset files can be found in examples directory

@@ -1,6 +1,6 @@
-#include "GCS.AudioActions.h"
-#include "GCS.AudioDataCalls.h"
-#include "GCS.Extras.h"
+#include "GCSAudioControl/AudioActions.h"
+#include "GCSAudioControl/AudioDataCalls.h"
+#include "GCSAudioControl/Extras.h"
 
 #include <fstream>
 #include <Windows.h>
@@ -60,7 +60,8 @@ void RequestedParams::applyParams()
 
     double newVolumeLevel = RequestedParams::newVolumeLevel();
     std::string deviceFriendlyName = RequestedParams::deviceFriendlyName();
-    IMMDevice* requestedDevice = getDevice(deviceFriendlyName, true);
+    IMMDevice* requestedDevice = NULL;
+    getDevice(deviceFriendlyName, true, requestedDevice);
     if (!requestedDevice)
     {
         CoUninitialize();

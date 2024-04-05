@@ -7,9 +7,9 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../bin)
 
 set(Resources ${CMAKE_BINARY_DIR}/../resources/resources.rc)
-set(AudioDataCalls_LIB GCS.AudioDataCalls.cpp)
-set(AudioActions_LIB GCS.AudioActions.cpp)
-set(Extras_LIB GCS.Extras.cpp)
+set(AudioDataCalls_LIB AudioDataCalls.cpp)
+set(AudioActions_LIB AudioActions.cpp)
+set(Extras_LIB Extras.cpp)
 set(MAIN_EXE main.cpp)
 
 add_library(GCS.AudioDataCalls SHARED ${AudioDataCalls_LIB})
